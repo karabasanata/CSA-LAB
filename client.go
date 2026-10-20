@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"net"
 	"os"
@@ -18,8 +19,11 @@ func read(conn *net.Conn) {
 }
 
 func main() {
+	serverAddr := flag.String("ip", "127.0.0.1:8030", "server ip:port")
+	flag.Parse()
+
 	stdin := bufio.NewReader(os.Stdin)
-	conn, err := net.Dial("tcp", "127.0.0.1:8030")
+	conn, err := net.Dial("tcp", *serverAddr)
 	if err != nil {
 		// probably no server running
 		fmt.Println(err.Error())
